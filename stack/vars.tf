@@ -104,3 +104,5 @@ variable "private_subnet_cidrs" { type = list(string) }
 # variable "nginx_sg"     { type = any }
 variable "security_group_id"{
 }
+variable "private_subnet_ids"{}
+variable "public_subnet_ids"{}

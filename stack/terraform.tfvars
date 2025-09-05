@@ -144,13 +144,19 @@ ecs_cluster_name = "ecs_cluster_prod"
 ##service  
 
 # VPC & Subnets
+private_subnet_ids = [
+  "subnet-09545ca9f549cc1fe",
+  "subnet-020a1e937aab1d340"
+] 
+
+public_subnet_ids = [
+  "subnet-06d4f6824f83d5495",
+  "subnet-0bddc09f0e06ee18d"
+]
 
 
 
 # Security Groups from other modules
-
-
-# # Task Definitions from other modules
 
 
 

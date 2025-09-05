@@ -78,7 +78,7 @@ module "frontend_service" {
   service_name       = "frontend-service"
   task_definition_arn= module.taskdefinition.task_definition_arns["frontend"]
   cluster_id         = module.ecs_cluster.ecs_cluster_id
-  subnet_ids         = var.public_subnet_cidrs
+  subnet_ids         = var.public_subnet_ids
   sg_ids = [module.frontend_sg.security_group_id]
   desired_count      = 2
   assign_public_ip   = true
@@ -89,7 +89,7 @@ module "backend_service" {
   service_name       = "backend-service"
   task_definition_arn = module.taskdefinition.task_definition_arns["backend"]
   cluster_id         = module.ecs_cluster.ecs_cluster_id
-  subnet_ids         = var.private_subnet_cidrs
+  subnet_ids         = var.private_subnet_ids
   sg_ids             = [module.backend_sg.security_group_id]
   desired_count      = 2
   assign_public_ip   = false
@@ -100,7 +100,7 @@ module "redis_service" {
   service_name       = "redis-service"
   task_definition_arn = module.taskdefinition.task_definition_arns["redis"]
   cluster_id         = module.ecs_cluster.ecs_cluster_id
-  subnet_ids         = var.private_subnet_cidrs
+  subnet_ids         = var.private_subnet_ids
   sg_ids             = [module.redis_sg.security_group_id]
   desired_count      = 1
   assign_public_ip   = false
@@ -111,7 +111,7 @@ module "postgres_service" {
   service_name       = "postgres-service"
   task_definition_arn = module.taskdefinition.task_definition_arns["postgres"]
   cluster_id         = module.ecs_cluster.ecs_cluster_id
-  subnet_ids         = var.private_subnet_cidrs
+  subnet_ids         = var.private_subnet_ids
   sg_ids             = [module.postgres_sg.security_group_id]
   desired_count      = 1
   assign_public_ip   = false
@@ -122,7 +122,7 @@ module "nginx_service" {
   service_name       = "nginx-service"
   task_definition_arn = module.taskdefinition.task_definition_arns["reverse_proxy"]
   cluster_id         = module.ecs_cluster.ecs_cluster_id
-  subnet_ids         = var.public_subnet_cidrs
+  subnet_ids         = var.public_subnet_ids
   sg_ids             = [module.nginx_sg.security_group_id]
   desired_count      = 2
   assign_public_ip   = true
