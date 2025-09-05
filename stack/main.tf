@@ -26,8 +26,44 @@ module "vpc" {
   private_subnet_cidrs = var.private_subnet_cidrs
   tags                 = var.tags
 }
-module "security_groups" {
-  source           = "/home/sameer/Desktop/new_ecs/modules/sg"
-  vpc_id           = var.vpc_id
-  security_groups  = var.security_groups
+# --- FRONTEND ---
+module "frontend_sg" {
+  source = "../modules/sg"
+  name = var.frontend["name"] 
+  description = var.frontend["description"] 
+  vpc_id = var.vpc_id 
+  ingress_rules = var.frontend["ingress"] 
+  egress_rules = var.frontend["egress"] 
+}
+module "backend_sg" { 
+  source = "../modules/sg" 
+  name = var.backend["name"] 
+  description = var.backend["description"] 
+  vpc_id = var.vpc_id 
+  ingress_rules = var.backend["ingress"] 
+  egress_rules = var.backend["egress"] 
+} 
+module "postgres_sg" {
+  source = "../modules/sg" 
+  name = var.postgres["name"] 
+  description = var.postgres["description"] 
+  vpc_id = var.vpc_id 
+  ingress_rules = var.postgres["ingress"] 
+  egress_rules = var.postgres["egress"] 
+  } 
+module "redis_sg" { 
+  source = "../modules/sg" 
+  name = var.redis["name"] 
+  description = var.redis["description"] 
+  vpc_id = var.vpc_id 
+  ingress_rules = var.redis["ingress"] 
+  egress_rules = var.redis["egress"] 
+}
+module "nginx_sg" { 
+  source = "../modules/sg" 
+  name = var.nginx["name"] 
+  description = var.nginx["description"] 
+  vpc_id = var.vpc_id 
+  ingress_rules = var.nginx["ingress"] 
+  egress_rules = var.nginx["egress"] 
 }

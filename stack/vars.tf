@@ -71,12 +71,25 @@ variable "tags" {
 }
 
 ##sg 
-variable "vpc_id" {
-  description = "VPC ID"
-  type        = string
+variable "frontend" {
+  type = any
 }
 
-variable "security_groups" {
-  description = "Map of security group definitions"
-  type        = map(any)
+variable "backend" {
+  type = any
+}
+
+variable "postgres" {
+  type = any
+}
+
+variable "redis" {
+  type = any
+}
+
+variable "nginx" {
+  type = any
+}
+variable "vpc_id"{
+  
 }

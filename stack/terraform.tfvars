@@ -100,64 +100,40 @@ tags = {
 ##sg
 
 vpc_id = "vpc-053667bab8da65260"
-security_groups = {
-  frontend = {
-    sg_name        = "frontend-sg"
-    sg_description = "Frontend SG"
-    ingress_rules = [
-      { from_port = 5000, to_port = 5000, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], security_groups = [] },
-      { from_port = 80,   to_port = 80,   protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], security_groups = [] },
-      { from_port = 443,  to_port = 443,  protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], security_groups = [] }
-    ]
-    egress_rules = [
-      { from_port = 8000, to_port = 8000, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], security_groups = [] }
-    ]
+frontend = { 
+  name = "frontend-sg" 
+  description = "SG for frontend" 
+  ingress = [ { from_port = 5000, to_port = 5000, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] }, 
+  { from_port = 80, to_port = 80, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] },
+  { from_port = 443, to_port = 443, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] }, ]
+  egress = [ { from_port = 8080, to_port = 8080, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] },
+   ]
+  } 
+backend = { 
+  name = "backend-sg" 
+  description = "SG for backend" 
+  ingress = [ { from_port = 8080, to_port = 8080, protocol = "tcp",cidr_blocks = ["0.0.0.0/0"] },
+  { from_port = 6379, to_port = 6379, protocol = "tcp",cidr_blocks = ["0.0.0.0/0"]},
+  ]
+  egress = [ { from_port = 5432, to_port = 5432, protocol = "tcp",cidr_blocks = ["0.0.0.0/0"]}, 
+  ] 
   }
-
-  backend = {
-    sg_name        = "backend-sg"
-    sg_description = "Backend SG"
-    ingress_rules = [
-      { from_port = 8080, to_port = 8080, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], security_groups = [] },
-      { from_port = 6379, to_port = 6379, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], security_groups = [] }
-    ]
-    egress_rules = [
-      { from_port = 5432, to_port = 5432, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], security_groups = [] }
-    ]
-  }
-
-  redis = {
-    sg_name        = "redis-sg"
-    sg_description = "Redis SG"
-    ingress_rules = [
-      { from_port = 6379, to_port = 6379, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], security_groups = [] }
-    ]
-    egress_rules = [
-      { from_port = 5432, to_port = 5432, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], security_groups = [] }
-    ]
-  }
-
-  postgres = {
-    sg_name        = "postgres-sg"
-    sg_description = "Postgres SG"
-    ingress_rules = [
-      { from_port = 5432, to_port = 5432, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], security_groups = [] }
-    ]
-    egress_rules = [
-      { from_port = 0, to_port = 0, protocol = "-1", cidr_blocks = ["0.0.0.0/0"], security_groups = [] }
-    ]
-  }
-
-  nginx = {
-    sg_name        = "nginx-sg"
-    sg_description = "Nginx SG"
-    ingress_rules = [
-      { from_port = 80,  to_port = 80,  protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], security_groups = [] },
-      { from_port = 443, to_port = 443, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], security_groups = [] },
-      { from_port = 22,  to_port = 22,  protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], security_groups = [] }
-    ]
-    egress_rules = [
-      { from_port = 0, to_port = 0, protocol = "-1", cidr_blocks = ["0.0.0.0/0"], security_groups = [] }
-    ]
-  }
+postgres = { 
+  name = "postgres-sg" 
+  description = "SG for postgres" 
+  ingress = [ { from_port = 5432, to_port = 5432, protocol = "tcp",cidr_blocks = ["0.0.0.0/0"]}, ] 
+  egress = [ { from_port = 0, to_port = 0, protocol = "-1", cidr_blocks = ["0.0.0.0/0"] }, 
+    ] 
+  } 
+redis = { 
+  name = "redis-sg" 
+  description = "SG for redis" 
+  ingress = [ { from_port = 6379, to_port = 6379, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] }, ] 
+  egress = [ { from_port = 5432, to_port = 5432, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"]}, ] 
+} 
+nginx = { 
+  name = "nginx-sg" 
+  description = "SG for nginx" 
+  ingress = [ { from_port = 80, to_port = 80, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] }, ] 
+  egress = [ { from_port = 0, to_port = 0, protocol = "-1", cidr_blocks = ["0.0.0.0/0"] }, ] 
 }
