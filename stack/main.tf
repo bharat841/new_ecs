@@ -73,3 +73,58 @@ module "ecs_cluster" {
   ecs_cluster_name = var.ecs_cluster_name
   
 }
+module "frontend_service" {
+  source             = "../modules/service"
+  service_name       = "frontend-service"
+  task_definition_arn= frontend_task_definition.task_definition_arn
+  cluster_id         = module.ecs_cluster.ecs_cluster_id
+  subnet_ids         = var.public_subnet_cidrs
+  sg_ids             = [module.frontend_sg.sg_id]
+  desired_count      = 2
+  assign_public_ip   = true
+  tags               = var.tags
+}
+module "backend_service" {
+  source             = "../modules/service"
+  service_name       = "backend-service"
+  task_definition_arn= backend_task_definition.task_definition_arn
+  cluster_id         = module.ecs_cluster.ecs_cluster_id
+  subnet_ids         = var.private_subnet_cidrs
+  sg_ids             = [module.backend_sg.sg_id]
+  desired_count      = 2
+  assign_public_ip   = false
+  tags               = var.tags
+}
+module "redis_service" {
+  source             = "../modules/service"
+  service_name       = "redis-service"
+  task_definition_arn= redis_task_definition.task_definition_arn
+  cluster_id         = module.ecs_cluster.ecs_cluster_id
+  subnet_ids         = var.private_subnet_cidrs
+  sg_ids             = [module.redis_sg.sg_id]
+  desired_count      = 1
+  assign_public_ip   = false
+  tags               = var.tags
+}
+module "postgres_service" {
+  source             = "../modules/service"
+  service_name       = "postgres-service"
+  task_definition_arn= postgres_task_definition.task_definition_arn
+  cluster_id         = module.ecs_cluster.ecs_cluster_id
+  subnet_ids         = var.private_subnet_cidrs
+  sg_ids             = [module.postgres_sg.sg_id]
+  desired_count      = 1
+  assign_public_ip   = false
+  tags               = var.tags
+}
+module "nginx_service" {
+  source             = "../modules/service"
+  service_name       = "nginx-service"
+  task_definition_arn= nginx_task_definition.task_definition_arn
+  cluster_id         = module.ecs_cluster.ecs_cluster_id
+  subnet_ids         = var.public_subnet_cidrs
+  sg_ids             = [module.nginx_sg.sg_id]
+  desired_count      = 2
+  assign_public_ip   = true
+  tags               = var.tags
+}
