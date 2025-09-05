@@ -148,17 +148,9 @@ ecs_cluster_name = "ecs_cluster_prod"
 
 
 # Security Groups from other modules
-frontend_sg = module.frontend_sg
-backend_sg  = module.backend_sg
-redis_sg    = module.redis_sg
-postgres_sg = module.postgres_sg
-nginx_sg    = module.nginx_sg
 
-# Task Definitions from other modules
-frontend_task_definition  = module.frontend_task_definition
-backend_task_definition   = module.backend_task_definition
-redis_task_definition     = module.redis_task_definition
-postgres_task_definition  = module.postgres_task_definition
-nginx_task_definition     = module.nginx_task_definition
+
+# # Task Definitions from other modules
+
 
 

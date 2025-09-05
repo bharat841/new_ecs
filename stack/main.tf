@@ -76,10 +76,10 @@ module "ecs_cluster" {
 module "frontend_service" {
   source             = "../modules/service"
   service_name       = "frontend-service"
-  task_definition_arn= frontend_task_definition.task_definition_arn
+  task_definition_arn= module.taskdefinition.task_definition_arns["frontend"]
   cluster_id         = module.ecs_cluster.ecs_cluster_id
   subnet_ids         = var.public_subnet_cidrs
-  sg_ids             = [module.frontend_sg.sg_id]
+  sg_ids = [module.frontend_sg.security_group_id]
   desired_count      = 2
   assign_public_ip   = true
   tags               = var.tags
@@ -87,10 +87,10 @@ module "frontend_service" {
 module "backend_service" {
   source             = "../modules/service"
   service_name       = "backend-service"
-  task_definition_arn= backend_task_definition.task_definition_arn
+  task_definition_arn = module.taskdefinition.task_definition_arns["backend"]
   cluster_id         = module.ecs_cluster.ecs_cluster_id
   subnet_ids         = var.private_subnet_cidrs
-  sg_ids             = [module.backend_sg.sg_id]
+  sg_ids             = [module.backend_sg.security_group_id]
   desired_count      = 2
   assign_public_ip   = false
   tags               = var.tags
@@ -98,10 +98,10 @@ module "backend_service" {
 module "redis_service" {
   source             = "../modules/service"
   service_name       = "redis-service"
-  task_definition_arn= redis_task_definition.task_definition_arn
+  task_definition_arn = module.taskdefinition.task_definition_arns["redis"]
   cluster_id         = module.ecs_cluster.ecs_cluster_id
   subnet_ids         = var.private_subnet_cidrs
-  sg_ids             = [module.redis_sg.sg_id]
+  sg_ids             = [module.redis_sg.security_group_id]
   desired_count      = 1
   assign_public_ip   = false
   tags               = var.tags
@@ -109,10 +109,10 @@ module "redis_service" {
 module "postgres_service" {
   source             = "../modules/service"
   service_name       = "postgres-service"
-  task_definition_arn= postgres_task_definition.task_definition_arn
+  task_definition_arn = module.taskdefinition.task_definition_arns["postgres"]
   cluster_id         = module.ecs_cluster.ecs_cluster_id
   subnet_ids         = var.private_subnet_cidrs
-  sg_ids             = [module.postgres_sg.sg_id]
+  sg_ids             = [module.postgres_sg.security_group_id]
   desired_count      = 1
   assign_public_ip   = false
   tags               = var.tags
@@ -120,10 +120,10 @@ module "postgres_service" {
 module "nginx_service" {
   source             = "../modules/service"
   service_name       = "nginx-service"
-  task_definition_arn= nginx_task_definition.task_definition_arn
+  task_definition_arn = module.taskdefinition.task_definition_arns["reverse_proxy"]
   cluster_id         = module.ecs_cluster.ecs_cluster_id
   subnet_ids         = var.public_subnet_cidrs
-  sg_ids             = [module.nginx_sg.sg_id]
+  sg_ids             = [module.nginx_sg.security_group_id]
   desired_count      = 2
   assign_public_ip   = true
   tags               = var.tags
