@@ -93,3 +93,22 @@ variable "nginx" {
 variable "vpc_id"{
   
 }
+
+##ecs_cluster
+
+variable "ecs_cluster_name" {
+  type        = string
+  description = "Name of the ECS cluster"
+}
+variable "frontend_task_definition" { type = any }
+variable "backend_task_definition"  { type = any }
+variable "redis_task_definition"    { type = any }
+variable "postgres_task_definition" { type = any }
+variable "nginx_task_definition"    { type = any }
+variable "public_subnet_cidrs"  { type = list(string) }
+variable "private_subnet_cidrs" { type = list(string) }
+variable "frontend_sg"  { type = any }
+variable "backend_sg"   { type = any }
+variable "redis_sg"     { type = any }
+variable "postgres_sg"  { type = any }
+variable "nginx_sg"     { type = any }

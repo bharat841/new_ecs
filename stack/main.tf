@@ -67,3 +67,9 @@ module "nginx_sg" {
   ingress_rules = var.nginx["ingress"] 
   egress_rules = var.nginx["egress"] 
 }
+module "ecs_cluster" {
+  source       = "../modules/cluster"
+  aws_region   = var.aws_region
+  ecs_cluster_name = var.ecs_cluster_name
+  
+}
